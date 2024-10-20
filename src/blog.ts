@@ -25,3 +25,19 @@ const blogs: Blog[] = [
         slug: ""
     }
 ]
+
+
+const blogContainer = document.getElementById("blog-container")
+
+blogs.forEach(blog => {
+    const blogDiv = document.createElement("div")
+    const blogTitle = document.createElement("h1")
+    const blogImage = document.createElement("img")
+    const blogDescription = document.createElement("p")
+
+    blogDiv.appendChild(blogTitle)
+    blogDiv.appendChild(blogImage)
+    blogDiv.appendChild(blogDescription)
+
+    blogContainer?.appendChild(blogDiv) //blogContainer possibly null -> added '?'
+})
