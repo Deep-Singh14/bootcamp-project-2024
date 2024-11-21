@@ -3,20 +3,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var blogs = [
     {
         title: "Downtown",
-        date: "10/16/2024",
+        date: new Date("10/16/2024"),
         description: "Went downtown to eat some Thai food",
-        image: "",
-        imageAlt: "Image of Downtown",
         slug: "downtown",
+        content: "This is a blog post about my trip downtown to enjoy some Thai food. The experience was delightful.",
+        comments: [] 
     },
     {
         title: "Milestone 1",
-        date: "10/19/2024",
+        date: new Date("10/19/2024"),
         description: "First milestone in H4I bootcamp",
-        image: "",
-        imageAlt: "Milestone 1 Image",
         slug: "milestone1",
-    },
+        content: "In this post, I reflect on completing the first milestone of the Hack4Impact bootcamp.",
+        comments: []
+    }
 ];
 document.addEventListener("DOMContentLoaded", function () {
     var blogContainer = document.getElementById("blog-container");
@@ -44,4 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("Blog container not found!");
     }
 });
+
+async function getBlogs(){
+	await connectDB() // function from db.ts before
+
+	try {
+			// query for all blogs and sort by date
+	    const blogs = await Blog.find().sort({ date: -1 }).orFail()
+			// send a response as the blogs as the message
+	    return blogs
+	} catch (err) {
+	    return null
+	}
+}
+
 exports.default = blogs;

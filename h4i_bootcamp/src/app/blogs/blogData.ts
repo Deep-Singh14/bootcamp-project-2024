@@ -1,3 +1,6 @@
+import blog from "@/database/blogSchema";
+import connectDB from "@/database/db";
+
 type Blog = {
   title: string;
   date: string;
@@ -53,6 +56,19 @@ if (blogContainer) {
   });
 } else {
   console.error("Blog container not found!");
+}
+
+async function getBlogs(){
+	await connectDB() // function from db.ts before
+
+	try {
+			// query for all blogs and sort by date
+	    const blogs = await blog.find().sort({ date: -1 }).orFail()
+			// send a response as the blogs as the message
+	    return blogs
+	} catch (err) {
+	    return null
+	}
 }
 
 export default blogs;
