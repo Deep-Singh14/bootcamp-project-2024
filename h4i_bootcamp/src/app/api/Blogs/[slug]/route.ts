@@ -1,22 +1,14 @@
-import { NextRequest, NextResponse } from 'next/server'
-import connectDB from "@/database/db"
-import blogSchema from "@/database/blogSchema"
+import { NextResponse } from 'next/server';
+import { getBlogBySlug } from '@/database/db';  // Adjust based on your actual function for fetching blog by slug
 
-type IParams = {
-		params: {
-			slug: string
-		}
-}
-
-// If { params } looks confusing, check the note below this code block
-export async function GET(req: NextRequest, { params }: IParams) {
-    await connectDB() // function from db.ts before
-		const { slug } = params // another destructure
-
-	   try {
-	        const blog = await blogSchema.findOne({ slug }).orFail()
-	        return NextResponse.json(blog)
-	    } catch (err) {
-	        return NextResponse.json('Blog not found.', { status: 404 })
-	    }
+export async function GET(request: Request, { params }: { params: { slug: string } }) {
+    try {
+        const blog = await getBlogBySlug(params.slug);
+        if (!blog) {
+            return NextResponse.json({ message: 'Blog not found' }, { status: 404 });
+        }
+        return NextResponse.json(blog);
+    } catch (error) {
+        return NextResponse.json({ message: 'Failed to fetch blog' }, { status: 500 });
+    }
 }

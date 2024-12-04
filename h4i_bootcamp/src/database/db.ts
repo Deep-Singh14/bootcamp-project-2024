@@ -1,19 +1,25 @@
 // db.ts
 import mongoose from "mongoose";
+import Blog from "./blogSchema";
 
-const url: string = process.env.MONGO_URI as string;
+const url = "mongodb+srv://deep:$Dsingh123@cluster0.d2p5k.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 let connection: typeof mongoose;
 
-/**
- * Makes a connection to a MongoDB database. If a connection already exists, does nothing
- * Call this function at the start of api routes and data fetches
- * @returns {Promise<typeof mongoose>}
- */
 const connectDB = async () => {
-  if (!connection) {
-    connection = await mongoose.connect(url);
+  try {
+    if (!connection) {
+      connection = await mongoose.connect(url);
+      console.log("Connected to MongoDB");
+    }
     return connection;
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+    throw error;
   }
+};
+
+export const getBlogBySlug = async (slug: string) => {
+  return Blog.findOne({ slug }).exec();
 };
 
 export default connectDB;

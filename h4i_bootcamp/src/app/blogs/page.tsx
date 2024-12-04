@@ -1,40 +1,42 @@
-import Blog from "@/database/blogSchema";
+import BlogPreview from "@/components/blogPreview";
+import { Blog } from "@/static/blogData";
 import connectDB from "@/database/db";
+import BlogModel from "@/database/blogSchema";
+import Navbar from "@/components/navbar";
 
-// Fetch blogs from MongoDB
 async function getBlogs() {
-  await connectDB(); // Ensure the database connection
+  await connectDB();
 
   try {
-    // Query for all blogs and sort by date
-    const blogs = await Blog.find().sort({ date: -1 }).orFail();
+    const blogs = await BlogModel.find().sort({ date: -1 }).orFail();
     return blogs;
   } catch (err) {
-    return null;
+    console.error(err);
+    return [];
   }
 }
 
-// Server-side rendering the blog list
 export default async function BlogListPage() {
   const blogs = await getBlogs();
 
-  // Check if blogs are returned
-  if (!blogs) {
+  if (!blogs || blogs.length === 0) {
     return <div>No blogs found or an error occurred.</div>;
   }
 
   return (
-    <div id="blog-container">
+    <div>
+      <Navbar></Navbar>
+      <h1 style={{ fontSize: "2.5rem", marginBottom: "30px" }}>Blog</h1>
       {blogs.map((blog: any) => (
-        <div key={blog.slug}>
-          <h1>{blog.title}</h1>
-          <img
-            src={blog.image || "/placeholder.jpg"}
-            alt={blog.imageAlt || "Blog image"}
-          />
-          <p>{blog.description}</p>
-          <a href={`/blogs/${blog.slug}`}>MORE</a>
-        </div>
+        <BlogPreview
+          key={blog.slug}
+          title={blog.title}
+          date={blog.date}  //Not working
+          description={blog.description}
+          image={blog.image || "/downtown.jpg"}
+          imageAlt={blog.imageAlt || "Blog Image"}
+          slug={blog.slug}
+        />
       ))}
     </div>
   );
