@@ -45,7 +45,7 @@ const Blog = () => {
 
   return (
     <div>
-      <Navbar /> {/* Include the Navbar only for this page */}
+      <Navbar />
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
       {blog.comments && blog.comments.map((comment, index) => (

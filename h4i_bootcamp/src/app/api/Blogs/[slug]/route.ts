@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getBlogBySlug } from '@/database/db';  // Adjust based on your actual function for fetching blog by slug
+import { getBlogBySlug } from '@/database/db';  
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
     try {
