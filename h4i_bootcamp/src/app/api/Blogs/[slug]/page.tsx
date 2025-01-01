@@ -1,7 +1,7 @@
-import Navbar from '@/components/navbar';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Comment from '@/components/Comment'; 
+import Navbar from "@/components/navbar";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Comment from "@/components/Comment";
 
 interface Blog {
   title: string;
@@ -22,7 +22,7 @@ const Blog = () => {
 
   useEffect(() => {
     if (slug) {
-      fetch(`/api/blogs/${slug}`)
+      fetch(`${slug}`)
         .then((res) => res.json())
         .then((data) => {
           setBlog(data);
@@ -48,9 +48,10 @@ const Blog = () => {
       <Navbar />
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
-      {blog.comments && blog.comments.map((comment, index) => (
-        <Comment key={index} comment={comment} />
-      ))}
+      {blog.comments &&
+        blog.comments.map((comment, index) => (
+          <Comment key={index} comment={comment} />
+        ))}
     </div>
   );
 };
