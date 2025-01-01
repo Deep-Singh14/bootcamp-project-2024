@@ -1,4 +1,3 @@
-import { getBlogBySlug } from '@/database/db';
 import { NextResponse } from 'next/server';
 
 type Comment = {

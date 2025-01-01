@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
 async function getBlogs(){
 	await connectDB() // function from db.ts before
 
