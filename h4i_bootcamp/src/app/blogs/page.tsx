@@ -27,7 +27,7 @@ export default async function BlogListPage() {
     <div>
       <Navbar></Navbar>
       <h1 style={{ fontSize: "2.5rem", marginBottom: "30px" }}>Blog</h1>
-      {blogs.map((blog: any) => (
+      {blogs.map((blog: Blog) => (
         <BlogPreview
           key={blog.slug}
           title={blog.title}
