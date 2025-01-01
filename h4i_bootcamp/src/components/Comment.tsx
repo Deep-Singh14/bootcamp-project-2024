@@ -1,25 +1,22 @@
-type CommentProps = {
-    comment: {
-        user: string;
-        comment: string;
-        time: Date;
-    };
-};
 
-// Function to parse and format the timestamp into a readable format
-const parseCommentTime = (time: Date) => {
-    const date = new Date(time);
-    return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
-};
+import React from 'react';
 
-const Comment = ({ comment }: CommentProps) => {
-    return (
-        <div className="comment">
-            <h4>{comment.user}</h4>
-            <p>{comment.comment}</p>
-            <span>{parseCommentTime(comment.time)}</span>
-        </div>
-    );
+interface CommentProps {
+  comment: {
+    user: string;
+    comment: string;
+    time: Date;
+  };
+}
+
+const Comment: React.FC<CommentProps> = ({ comment }) => {
+  return (
+    <div className="comment">
+      <p><strong>{comment.user}</strong> says:</p>
+      <p>{comment.comment}</p>
+      <p><em>{new Date(comment.time).toLocaleString()}</em></p>
+    </div>
+  );
 };
 
 export default Comment;

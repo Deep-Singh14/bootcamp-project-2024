@@ -1,34 +1,43 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import Blog from '@/database/blogSchema'; 
+import { NextRequest, NextResponse } from 'next/server';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
-  const { slug } = req.query;
+interface Comment {
+  user: string;
+  comment: string;
+  time: Date;
+}
 
-  switch (method) {
-    case 'POST':
-      try {
-        const { user, comment } = req.body;
-        const blog = await Blog.findOne({ slug });
+interface Blog {
+  slug: string;
+  title: string;
+  content: string;
+  comments: Comment[];
+}
 
-        if (!blog) {
-          return res.status(404).json({ message: 'Blog not found' });
-        }
+// Mock in-memory data for blogs
+const blogs: Blog[] = [
+  {
+    slug: 'milestone1',
+    title: 'Milestone 1',
+    content: 'This is the content of milestone 1.',
+    comments: [],
+  },
+];
 
-        blog.comments.push({
-          user,
-          comment,
-          time: new Date(),
-        });
+export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const blog = blogs.find((b) => b.slug === slug);
 
-        await blog.save();
-        res.status(200).json(blog);
-      } catch (error) {
-        res.status(500).json({ message: 'Failed to add comment' });
-      }
-      break;
+  if (!blog) {
+    return NextResponse.json({ message: 'Blog not found' }, { status: 404 });
+  }
 
-    default:
-      res.status(405).json({ message: 'Method Not Allowed' });
+  try {
+    const newComment: Comment = await req.json();
+
+    blog.comments.push(newComment);
+
+    return NextResponse.json({ message: 'Comment added successfully' });
+  } catch (error) {
+    return NextResponse.json({ message: 'Error adding comment', error }, { status: 500 });
   }
 }
