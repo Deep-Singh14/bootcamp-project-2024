@@ -41,10 +41,7 @@ const blogs: Blog[] = [
   },
 ];
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   const { slug } = params;
   const blog = blogs.find((b) => b.slug === slug);
 
@@ -55,10 +52,7 @@ export async function GET(
   }
 }
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
   const { slug } = params;
 
   const blog: Blog | undefined = blogs.find((b) => b.slug === slug);
