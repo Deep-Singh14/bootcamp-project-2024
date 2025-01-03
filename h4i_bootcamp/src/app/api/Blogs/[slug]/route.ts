@@ -41,8 +41,10 @@ const blogs: Blog[] = [
   },
 ];
 
-export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = params;
+export async function GET(_request: NextRequest,
+    { params }: { params: Promise<{ slug: string[] }> },
+  ) {
+  const slug = (await params).slug[0];
   const blog = blogs.find((b) => b.slug === slug);
 
   if (blog) {
@@ -52,8 +54,10 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
   }
 }
 
-export async function POST(req: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = params;
+export async function POST(_request: NextRequest,
+    { params }: { params: Promise<{ slug: string[] }> },
+  ) {
+  const slug = (await params).slug[0];
 
   const blog: Blog | undefined = blogs.find((b) => b.slug === slug);
 
@@ -62,7 +66,7 @@ export async function POST(req: NextRequest, { params }: { params: { slug: strin
   }
 
   try {
-    const newComment: Comment = await req.json();
+    const newComment: Comment = await _request.json();
     blog.comments.push(newComment);
 
     updateBlog(slug, blog);
