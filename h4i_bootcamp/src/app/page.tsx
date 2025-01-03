@@ -17,7 +17,7 @@ export default function Home() {
           <h2>About Me</h2>
           <div className="about-content hover-box">
             <div className="about-image">
-              <Image src="/public/images/cat.jpg" alt="just a normal cat" className="scaled-image" />
+              <Image src="../../public/images/cat.jpg" alt="just a normal cat" className="scaled-image" />
             </div>
             <div className="about-text">
               <p>My name is <strong>Deep</strong> and I am a first-year <strong>CS</strong> major.</p>
