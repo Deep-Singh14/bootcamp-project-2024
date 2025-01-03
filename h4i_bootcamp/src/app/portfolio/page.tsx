@@ -14,7 +14,7 @@ export default function Resume() {
             <div className="project-details">
                 <p className="project-name">Deep's Website</p>
                 <p className="project-description">A personal portfolio website showcasing my work, blog, and resume.</p>
-                <Link href="/" className="button">Learn More</Link>
+                <Link href="https://www.linkedin.com/in/deep-singh14/" className="button">Learn More</Link>
             </div>
         </div>
     </main>
