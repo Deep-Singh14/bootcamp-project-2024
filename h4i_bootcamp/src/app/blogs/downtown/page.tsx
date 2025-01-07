@@ -2,9 +2,22 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/navbar';
 
+// Define types for the blog and comment objects
+interface Comment {
+  time: Date;
+  user: string;
+  comment: string;
+}
+
+interface Blog {
+  title: string;
+  date: string;
+  content: string;
+  comments: Comment[];
+}
+
 export default function Downtown() {
-  // Define the blog data
-  const [blog, setBlog] = useState({
+  const [blog, setBlog] = useState<Blog>({
     title: 'Downtown',
     date: '10/16/2024',
     content: 'Went downtown to eat some Thai food',
@@ -45,8 +58,8 @@ function CommentForm({
   blog,
 }: {
   slug: string;
-  setBlog: React.Dispatch<React.SetStateAction<any>>;
-  blog: { title: string; date: string; content: string; comments: any[] };
+  setBlog: React.Dispatch<React.SetStateAction<Blog>>;
+  blog: Blog;
 }) {
   const [user, setUser] = useState('');
   const [comment, setComment] = useState('');
@@ -64,8 +77,8 @@ function CommentForm({
     setError(''); // Clear error
 
     // Update the blog comments with the new comment
-    const newComment = { time: new Date(), user, comment };
-    setBlog((prevBlog: { comments: any; }) => ({
+    const newComment: Comment = { time: new Date(), user, comment };
+    setBlog((prevBlog) => ({
       ...prevBlog,
       comments: [...prevBlog.comments, newComment],
     }));
@@ -76,7 +89,7 @@ function CommentForm({
   };
 
   return (
-    <div>
+    <div className="about-content hover-box">
       <h3>Leave a Comment</h3>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}

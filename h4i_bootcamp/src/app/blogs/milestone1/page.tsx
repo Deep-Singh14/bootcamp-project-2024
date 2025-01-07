@@ -2,9 +2,22 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/navbar';
 
+// Define types for the blog and comment objects
+interface Comment {
+  time: Date;
+  user: string;
+  comment: string;
+}
+
+interface Blog {
+  title: string;
+  date: string;
+  content: string;
+  comments: Comment[];
+}
+
 export default function Milestone1() {
-  // Define the blog data as state so that we can update it when new comments are added
-  const [blog, setBlog] = useState({
+  const [blog, setBlog] = useState<Blog>({
     title: 'Milestone 1',
     date: '10/19/2024',
     content: 'First milestone in H4I bootcamp',
@@ -14,7 +27,7 @@ export default function Milestone1() {
     ],
   });
 
-  const slug = 'milestone1'; 
+  const slug = 'milestone1';
 
   return (
     <div>
@@ -45,8 +58,8 @@ function CommentForm({
   blog,
 }: {
   slug: string;
-  setBlog: React.Dispatch<React.SetStateAction<any>>;
-  blog: { title: string; date: string; content: string; comments: any[] };
+  setBlog: React.Dispatch<React.SetStateAction<Blog>>;
+  blog: Blog;
 }) {
   const [user, setUser] = useState('');
   const [comment, setComment] = useState('');
@@ -64,10 +77,10 @@ function CommentForm({
     setError(''); // Clear error
 
     // Create a new comment object
-    const newComment = { time: new Date(), user, comment };
+    const newComment: Comment = { time: new Date(), user, comment };
 
     // Update the blog's comments state with the new comment
-    setBlog((prevBlog: { comments: any; }) => ({
+    setBlog((prevBlog) => ({
       ...prevBlog,
       comments: [...prevBlog.comments, newComment],
     }));
