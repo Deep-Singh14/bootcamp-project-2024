@@ -14,7 +14,7 @@ export default function Milestone1() {
     ],
   });
 
-  const slug = 'milestone1'; // This can come from routing if needed
+  const slug = 'milestone1'; 
 
   return (
     <div>
@@ -26,7 +26,6 @@ export default function Milestone1() {
         <p>{blog.content}</p>
       </main>
 
-      {/* Render comments */}
       <h2>Comments</h2>
       {blog.comments.map((comment, index) => (
         <div key={index}>
@@ -34,7 +33,6 @@ export default function Milestone1() {
         </div>
       ))}
 
-      {/* Comment Form */}
       <CommentForm slug={slug} setBlog={setBlog} blog={blog} />
     </div>
   );

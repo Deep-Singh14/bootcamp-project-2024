@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { connectToDatabase } from '@/database/db'; // Assume you have a function to connect to your DB
+import { connectToDatabase } from '@/database/db'; 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { slug } = req.query; // Get blog slug from URL
-  const { user, comment } = req.body; // Get user and comment from POST request
+  const { slug } = req.query; 
+  const { user, comment } = req.body; 
 
   if (req.method === 'POST') {
     if (!user || !comment) {

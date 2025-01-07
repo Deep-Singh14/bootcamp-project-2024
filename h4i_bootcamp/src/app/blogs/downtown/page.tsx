@@ -14,7 +14,7 @@ export default function Downtown() {
     ],
   });
 
-  const slug = 'downtown'; // This can come from routing if needed
+  const slug = 'downtown';
 
   return (
     <div>
@@ -26,7 +26,6 @@ export default function Downtown() {
         <p>{blog.content}</p>
       </main>
 
-      {/* Render comments */}
       <h2>Comments</h2>
       {blog.comments.map((comment, index) => (
         <div key={index}>
@@ -34,7 +33,6 @@ export default function Downtown() {
         </div>
       ))}
 
-      {/* Comment Form */}
       <CommentForm slug={slug} setBlog={setBlog} blog={blog} />
     </div>
   );

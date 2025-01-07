@@ -1,4 +1,3 @@
-// db.ts
 import mongoose from "mongoose";
 import Blog from "./blogSchema";
 import { MongoClient } from "mongodb";
