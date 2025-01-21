@@ -3,7 +3,6 @@ import { Blog } from "@/static/blogData";
 import connectDB from "@/database/db";
 import BlogModel from "@/database/blogSchema";
 import Navbar from "@/components/navbar";
-import { format } from "date-fns";
 
 async function getBlogs() {
   await connectDB();
